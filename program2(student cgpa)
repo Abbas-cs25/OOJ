@@ -1,0 +1,85 @@
+import java.util.Scanner;
+
+class Student {
+    String usn;
+    String name;
+    int n;               
+    int[] credits;
+    int[] marks;
+
+    void accept() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter USN: ");
+        usn = sc.nextLine();
+
+        System.out.print("Enter Name: ");
+        name = sc.nextLine();
+
+        System.out.print("Enter number of subjects: ");
+        n = sc.nextInt();
+
+        credits = new int[n];
+        marks = new int[n];
+
+        System.out.println("\nEnter details for each subject:");
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter credits for subject " + (i + 1) + ": ");
+            credits[i] = sc.nextInt();
+            System.out.print("Enter marks for subject " + (i + 1) + ": ");
+            marks[i] = sc.nextInt();
+        }
+    }
+
+    double calculateSGPA() {
+        int totalCredits = 0;
+        double weightedSum = 0.0;
+
+        for (int i = 0; i < n; i++) {
+            int gradePoint = getGradePoint(marks[i]);
+            weightedSum += gradePoint * credits[i];
+            totalCredits += credits[i];
+        }
+
+        return weightedSum / totalCredits;
+    }
+
+    int getGradePoint(int marks) {
+        if (marks >= 90)
+            return 10;
+        else if (marks >= 80)
+            return 9;
+        else if (marks >= 70)
+            return 8;
+        else if (marks >= 60)
+            return 7;
+        else if (marks >= 50)
+            return 6;
+        else if (marks >= 40)
+            return 5;
+        else
+            return 0; 
+    }
+
+    void display() {
+        System.out.println("\n--- Student Details ---");
+        System.out.println("USN  : " + usn);
+        System.out.println("Name : " + name);
+
+        System.out.println("\nSubject-wise Details:");
+        System.out.println("Sub\tCredits\tMarks");
+        for (int i = 0; i < n; i++) {
+            System.out.println((i + 1) + "\t" + credits[i] + "\t" + marks[i]);
+        }
+
+        System.out.printf("\nSGPA: %.2f\n", calculateSGPA());
+    }
+}
+
+public class prgm2 {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.accept();
+        s.display();
+    }
+}
